@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="profile-assets/favicon.svg" type="image/svg+xml">
+  <meta name="description" content="余沛玲 Pearl 的个人主页：数据科学与大数据技术专业大一学生，探索 AI 算法与大模型，记录项目、音乐与生活。">
+  <title>余沛玲 Pearl — Creative Portfolio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+  <style>
+    .project-facts dd { margin: 0; overflow-wrap: anywhere; }
+    #contact a { overflow-wrap: anywhere; }
+
+    :root {
+      --paper: #f6f6f3;
+      --ink: #1d1d1b;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--paper); }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image:
+        radial-gradient(rgba(35,33,29,.035) .7px, transparent .7px),
+        radial-gradient(rgba(35,33,29,.025) .7px, transparent .7px),
+        linear-gradient(115deg, rgba(255,255,255,.45), transparent 35%, rgba(205,200,190,.08));
+      background-position: 0 0, 7px 7px, 0 0;
+      background-size: 14px 14px, 14px 14px, 100% 100%;
+    }
+
+    body::after {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      pointer-events: none;
+      content: "";
+      opacity: .55;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+    }
+
+    ::selection { color: #fff; background: #1d1d1b; }
+
+    .side-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      width: fit-content;
+      padding: .3rem 0;
+      color: #77766f;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      transition: color .22s ease, transform .22s ease;
+    }
+
+    .side-link::before {
+      width: 8px;
+      height: 8px;
+      border: 1px solid currentColor;
+      border-radius: 52% 48% 55% 45%;
+      content: "";
+      transform: rotate(45deg) scale(0);
+      transition: transform .22s ease;
+    }
+
+    .side-link:hover,
+    .side-link.active {
+      color: #1d1d1b;
+      transform: translateX(4px);
+    }
+
+    .side-link:hover::before,
+    .side-link.active::before {
+      transform: rotate(45deg) scale(1);
+    }
+
+    .paper-note {
+      background:
+        linear-gradient(rgba(255,255,255,.84), rgba(255,255,255,.84)),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(29,29,27,.075) 31px 32px);
+      box-shadow: 0 20px 55px rgba(35,33,29,.08);
+    }
+
+    .rough-frame {
+      border: 1.5px solid rgba(29,29,27,.78);
+      border-radius: 5px 18px 8px 22px / 20px 7px 24px 10px;
+    }
+
+    .polaroid {
+      --rot: 0deg;
+      position: relative;
+      transform: rotate(var(--rot));
+      transform-origin: 50% 55%;
+      transition: transform .34s cubic-bezier(.2,.75,.2,1), box-shadow .34s ease;
+      will-change: transform;
+    }
+
+    .polaroid:hover {
+      z-index: 40;
+      transform: rotate(0deg) translateY(-4px) scale(1.025);
+      box-shadow: 0 24px 48px rgba(32,30,26,.18);
+    }
+
+    .tape::before,
+    .tape::after {
+      position: absolute;
+      z-index: 10;
+      width: 72px;
+      height: 23px;
+      content: "";
+      background: rgba(243,232,198,.72);
+      box-shadow: inset 0 0 0 1px rgba(85,77,51,.04);
+      mix-blend-mode: multiply;
+    }
+
+    .tape::before {
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+    }
+
+    .tape::after {
+      right: -24px;
+      bottom: 22%;
+      transform: rotate(72deg);
+    }
+
+    .tape-one::after { display: none; }
+
+    .watermark {
+      color: rgba(29,29,27,.035);
+      filter: blur(.8px);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .empty-frame {
+      border: 2px solid rgba(29,29,27,.14);
+      background: rgba(255,255,255,.16);
+      box-shadow: inset 0 0 0 10px rgba(255,255,255,.28);
+    }
+
+    .empty-frame::after {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      color: rgba(29,29,27,.28);
+      font-family: "Patrick Hand", cursive;
+      font-size: .8rem;
+      content: attr(data-caption);
+    }
+
+    .tab-button {
+      color: #55534e;
+      background: #e9e8e3;
+      transition: color .26s ease, background-color .26s ease, transform .26s ease;
+    }
+
+    .tab-button:hover {
+      transform: translateY(-2px) rotate(-.5deg);
+    }
+
+    .tab-button.active {
+      color: #fff !important;
+      background: #1d1d1b !important;
+      box-shadow: 0 9px 20px rgba(29,29,27,.18);
+    }
+
+    .project-panel {
+      animation: revealPanel .46s cubic-bezier(.2,.75,.2,1) both;
+    }
+
+    @keyframes revealPanel {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .phone-shell {
+      position: relative;
+      width: 188px;
+      flex: 0 0 auto;
+      aspect-ratio: 9 / 18.5;
+      overflow: hidden;
+      border: 7px solid #1d1d1b;
+      border-bottom: 0;
+      border-radius: 30px 30px 0 0;
+      background: #111;
+      box-shadow: 0 16px 32px rgba(29,29,27,.15);
+    }
+
+    .phone-shell::before {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      z-index: 3;
+      width: 52px;
+      height: 6px;
+      border-radius: 99px;
+      content: "";
+      background: #1d1d1b;
+      transform: translateX(-50%);
+    }
+
+    .phone-shell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sticker {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(29,29,27,.7);
+      box-shadow: 2px 2px 0 rgba(29,29,27,.12);
+      font-family: "Patrick Hand", cursive;
+    }
+
+    #sidebar {
+      z-index: 60;
+      transition: transform .32s cubic-bezier(.2,.75,.2,1);
+    }
+
+    @media (max-width: 1023px) {
+      #sidebar { transform: translateX(-105%); }
+      #sidebar.open { transform: translateX(0); }
+      body.menu-open { overflow: hidden; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="homepage-layout.css">
+</head>
+
+<body class="font-sans antialiased">
+
+  <!-- Mobile header -->
+  <header class="fixed inset-x-0 top-0 z-40 flex h-16 items-center justify-between border-b border-black/10 bg-paper/90 px-5 backdrop-blur-md lg:hidden">
+    <a href="#home" class="font-hand text-3xl font-bold">Pearl<span class="text-[#c77979]">.</span></a>
+    <button id="menuButton" type="button" aria-label="打开导航菜单" aria-expanded="false"
+      class="grid h-10 w-10 place-items-center rounded-full border border-black/20 bg-white/60 active:scale-95">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </header>
+
+  <div id="menuBackdrop" class="fixed inset-0 z-50 hidden bg-black/25 backdrop-blur-[2px] lg:hidden"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-60 flex w-[280px] flex-col border-r border-black/10 bg-[#f2f0ea]/95 px-9 py-9 lg:w-[245px]">
+    <div class="flex items-start justify-between">
+      <a href="#home">
+        <span class="block font-hand text-[2.8rem] font-bold leading-none">Pearl<span class="text-[#c77979]">.</span></span>
+        <span class="mt-2 block text-[9px] font-medium uppercase tracking-[.32em] text-black/45">Creative portfolio</span>
+      </a>
+
+      <button id="closeMenuButton" type="button" aria-label="关闭导航菜单"
+        class="grid h-9 w-9 place-items-center rounded-full border border-black/15 lg:hidden">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="mt-24 space-y-8" aria-label="主导航">
+      <a href="#home" class="side-link active" data-section="home">
+        <span>HOME</span>
+        <span aria-hidden="true">⌂</span>
+      </a>
+      <a href="#works" class="side-link" data-section="works">
+        <span>WORKS</span>
+        <span aria-hidden="true">◉</span>
+      </a>
+      <a href="#about" class="side-link" data-section="about">
+        <span>ABOUT ME</span>
+        <span aria-hidden="true">☺</span>
+      </a>
+    </nav>
+
+    <div class="mt-auto">
+      <div class="mb-7 flex items-center gap-3 text-black/35">
+        <span class="h-px flex-1 bg-current"></span>
+        <span class="font-note text-xl" aria-hidden="true">♪</span>
+      </div>
+      <p class="font-note text-sm leading-5 text-black/45">Keep curious.<br>Make it meaningful.</p>
+      <p class="mt-5 text-[9px] uppercase tracking-[.25em] text-black/35">© 2026 Pearl</p>
+    </div>
+  </aside>
+
+  <main class="pt-16 lg:ml-[245px] lg:pt-0">
+
+    <!-- Hero -->
+    <section id="home" class="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden px-5 py-24 sm:px-8 lg:min-h-screen lg:px-14 xl:px-20">
+      <div class="watermark pointer-events-none absolute left-[3%] top-[8%] font-hand text-[5.5rem] font-bold leading-none sm:text-[8rem] lg:text-[11rem] xl:text-[14rem]">
+        WELCOME TO MY WORLD
+      </div>
+
+      <div class="relative z-10 mx-auto w-full max-w-[1180px]">
+        <div class="mb-8 flex items-center justify-between lg:mb-10">
+          <span class="sticker -rotate-3 bg-butter px-4 py-1.5 text-sm">open to new ideas</span>
+          <span class="hidden text-[9px] uppercase tracking-[.3em] text-black/40 sm:block">Shanghai / 31°N 121°E</span>
+        </div>
+
+        <div class="paper-note rough-frame relative mx-auto max-w-[930px] px-5 py-8 sm:px-10 sm:py-12 lg:px-16 lg:py-14">
+          <svg class="pointer-events-none absolute inset-[-7px] h-[calc(100%+14px)] w-[calc(100%+14px)]" viewBox="0 0 1000 620" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M13 47C17 24 50 10 78 12c77 5 111-8 185-4 83 4 142 9 241 2 108-8 167-4 263 0 83 4 164-1 208 10 30 8 34 33 30 65-5 36 5 76 3 132-3 54 5 99 1 151-3 39 3 83-2 123-5 39-10 65-49 72-72 13-151 5-237 4-88-1-174 6-279 2-101-4-199 7-293 1-50-3-95-1-126-22-22-15-16-50-18-84-2-38 4-70 2-116-3-53 2-88 1-143 0-50-7-102-1-153Z"
+              fill="none" stroke="rgba(29,29,27,.74)" stroke-width="1.7" vector-effect="non-scaling-stroke"/>
+          </svg>
+
+          <div class="relative grid items-center gap-10 md:grid-cols-[minmax(220px,.78fr)_minmax(280px,1.22fr)] md:gap-14">
+            <div class="mx-auto w-full max-w-[275px]">
+              <figure class="polaroid tape bg-white p-3 pb-14 shadow-xl" style="--rot:-3.5deg">
+              <img class="aspect-[4/5] w-full object-cover grayscale-[12%]"
+                 src="profile-assets/portrait.jpg"
+                 alt="Pearl 的照片">
+                <figcaption class="absolute inset-x-0 bottom-3 text-center font-hand text-xl text-black/70">
+                  hello, nice to meet you!
+                </figcaption>
+              </figure>
+              <p class="mt-5 text-center text-[9px] uppercase tracking-[.28em] text-black/35">portrait / 2026</p>
+            </div>
+
+            <div>
+              <p class="mb-4 font-note text-sm uppercase tracking-[.2em] text-black/40">A little intro · 01</p>
+              <h1 class="text-[2.45rem] font-light leading-[1.08] tracking-[-.035em] sm:text-5xl lg:text-[3.6rem]">
+                Hello, I'm <span class="font-hand text-[1.2em] font-bold text-[#c77979]">Pearl.</span>
+              </h1>
+              <p class="mt-5 text-base font-light leading-8 text-black/65 sm:text-lg">
+                This is my world.<br>
+                <span class="font-medium text-black/85">学生 &amp; rnb音乐爱好者</span>
+              </p>
+              <p class="mt-7 max-w-lg text-sm leading-7 text-black/50 sm:text-[15px]">
+                远大前程 久久为功
+              </p>
+
+              <div class="mt-8 flex flex-wrap items-center gap-3">
+                <a href="https://weibo.com/u/9113872158"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rounded-full border border-black/20 bg-white/70 px-4 py-2 text-xs font-medium transition hover:-translate-y-0.5 hover:bg-black hover:text-white">
+                微博 Weibo
+                </a>
+                <a href="https://github.com/Crescendo0505" 
+                target="_blank" rel="noopener noreferrer" 
+                class="rounded-full border border-black/20 bg-white/70 px-4 py-2 text-xs font-medium transition hover:-translate-y-0.5 hover:bg-black hover:text-white">
+                GitHub
+                </a>
+                <span class="px-1 py-2 text-xs text-black/45">⌖ Base in Shanghai</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile collage -->
+        <div class="mt-10 grid grid-cols-2 gap-4 lg:hidden">
+          <figure class="polaroid bg-white p-2.5 pb-10 shadow-lg" style="--rot:-3deg">
+            <img class="aspect-square w-full object-cover grayscale-[18%]"
+              src="profile-assets/city.jpg"
+              alt="上海的城市风景">
+            <figcaption class="mt-2 text-center font-hand text-lg text-black/60">Shanghai / 2026</figcaption>
+          </figure>
+          <figure class="polaroid tape tape-one mt-6 bg-white p-2.5 pb-10 shadow-lg" style="--rot:4deg">
+            <img class="aspect-square w-full object-cover grayscale-[15%]"
+              src="profile-assets/objects.jpg"
+              alt="Lucius’s Jasmine">
+            <figcaption class="mt-2 text-center font-hand text-lg text-black/60">Jasmine · AI </figcaption>
+          </figure>
+        </div>
+
+        <!-- Desktop collage -->
+        <figure class="polaroid tape absolute -left-10 top-[20%] hidden w-[165px] bg-white p-2.5 pb-11 shadow-xl xl:block" style="--rot:-5deg">
+          <img class="aspect-[4/5] w-full object-cover grayscale-[22%]"
+            src="profile-assets/life.jpg"
+            alt="上海，与老师聚餐的生活片段">
+          <figcaption class="mt-2 text-center font-hand text-lg text-black/60">a little moment</figcaption>
+        </figure>
+
+        <figure class="polaroid absolute -right-12 top-[14%] hidden w-[188px] bg-white p-3 pb-12 shadow-xl xl:block" style="--rot:4deg">
+          <img class="aspect-square w-full object-cover grayscale-[18%]"
+            src="profile-assets/travel.png"
+            alt="旅行风景 AI 例图">
+          <figcaption class="mt-3 text-center font-hand text-xl text-black/60">travel · AI </figcaption>
+        </figure>
+
+        <figure class="polaroid tape absolute -right-6 bottom-[4%] hidden w-[155px] bg-white p-2.5 pb-10 shadow-xl xl:block" style="--rot:-2deg">
+          <img class="aspect-[4/3] w-full object-cover grayscale-[15%]"
+            src="profile-assets/concert.jpg"
+            alt="在南京第一次看喜欢的歌手现场">
+          <figcaption class="mt-2 text-center font-hand text-lg text-black/60">live / Nanjing</figcaption>
+        </figure>
+
+        <span class="absolute -left-2 bottom-[16%] hidden -rotate-6 rounded-full bg-sky px-4 py-2 font-note text-sm lg:block">
+          thinking &gt; making
+        </span>
+      </div>
+    </section>
+
+    <!-- Concept -->
+    <section id="concepts" class="relative overflow-hidden border-y border-black/10 px-5 py-28 sm:px-8 lg:px-14 lg:py-40 xl:px-20">
+      <div class="empty-frame absolute -left-8 top-20 h-44 w-36 -rotate-9 lg:left-[8%] lg:h-56 lg:w-44" data-caption="idea no. 01"></div>
+      <div class="empty-frame absolute -right-8 top-16 h-40 w-32 rotate-8 lg:right-[12%] lg:h-52 lg:w-40" data-caption="work in progress"></div>
+      <div class="empty-frame absolute -bottom-5 left-[43%] hidden h-40 w-32 -rotate-4 lg:block" data-caption="to be continued..."></div>
+
+      <div class="relative z-10 mx-auto max-w-[1180px]">
+        <div class="mb-12 flex items-center gap-4 lg:mb-16">
+          <span class="sticker -rotate-2 bg-sage px-4 py-1.5 text-sm">creative notes</span>
+          <span class="h-px flex-1 bg-black/15"></span>
+          <span class="font-note text-sm text-black/35">02 / MINDSET</span>
+        </div>
+
+        <div class="flex min-h-[310px] flex-col justify-center gap-3 sm:min-h-[390px] lg:min-h-[470px] lg:gap-0">
+          <div class="relative lg:ml-[8%]">
+            <p class="font-note text-sm uppercase tracking-[.25em] text-black/35">always chasing</p>
+            <h2 class="watermark absolute -left-2 -top-10 font-hand text-[7rem] font-bold leading-none sm:text-[11rem] lg:text-[15rem]">vibe</h2>
+            <p class="relative font-hand text-[6.5rem] font-bold leading-[.78] sm:text-[10rem] lg:text-[14rem]">* vibe *</p>
+          </div>
+
+          <div class="relative self-end lg:mr-[5%] lg:mt-[-1rem]">
+            <p class="absolute -right-6 -top-8 rotate-6 font-note text-sm text-black/40">logic + intuition</p>
+            <p class="font-hand text-[5.8rem] font-bold leading-[.78] sm:text-[9rem] lg:text-[13rem]">* coding *</p>
+          </div>
+        </div>
+
+        <p class="ml-auto mt-10 max-w-sm rotate-1 border-l-2 border-black/25 pl-5 font-note text-xl leading-8 text-black/60 lg:mt-4">
+          灵感不是凭空出现，它来自持续观察、认真记录，以及不断把模糊变成清晰。
+        </p>
+      </div>
+    </section>
+
+    <!-- Works -->
+    <section id="works" class="relative overflow-hidden px-5 py-28 sm:px-8 lg:px-14 lg:py-36 xl:px-20">
+      <div class="pointer-events-none absolute -right-4 top-32 font-hand text-[8rem] text-black/[.025] lg:text-[12rem]">WORKS</div>
+
+      <div class="relative z-10 mx-auto max-w-[1220px]">
+        <header class="mb-12 flex flex-col gap-6 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p class="mb-4 text-[9px] font-semibold uppercase tracking-[.3em] text-black/45">Selected projects</p>
+            <h2 class="text-4xl font-light tracking-[-.045em] sm:text-5xl lg:text-6xl">
+              Things I've <span class="font-hand text-[1.15em] font-bold">made.</span>
+            </h2>
+          </div>
+          <p class="max-w-sm text-sm leading-7 text-black/50">
+            从金融新闻学习到智能体构建，记录我与 AI 协作、梳理需求并逐步验证想法的过程。两个项目均在持续开发，图片暂为示意占位。
+          </p>
+        </header>
+
+        <div id="projectTabs" class="mb-14 flex flex-wrap gap-2.5 lg:mb-20" role="tablist" aria-label="选择项目"></div>
+        <div id="projectContent"></div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="relative overflow-hidden border-t border-black/10 bg-[#efede6] px-5 py-28 sm:px-8 lg:px-14 lg:py-36 xl:px-20">
+      <div class="absolute -right-10 top-14 rotate-6 font-hand text-[8rem] text-black/[.035] lg:text-[12rem]">ABOUT</div>
+
+      <div class="relative z-10 mx-auto grid max-w-[1180px] gap-16 lg:grid-cols-[.9fr_1.1fr] lg:gap-24">
+        <div class="relative mx-auto w-full max-w-sm">
+          <figure class="polaroid tape tape-one bg-white p-4 pb-16 shadow-xl" style="--rot:3deg">
+            <img class="aspect-[4/5] w-full object-cover grayscale-[15%]"
+              src="profile-assets/portrait-natural.jpg"
+              alt="余沛玲 Pearl 的生活照">
+            <figcaption class="mt-4 text-center font-hand text-2xl text-black/60">still learning, still creating.</figcaption>
+          </figure>
+          <span class="absolute -bottom-5 -left-5 -rotate-6 bg-sage px-4 py-2 font-note text-sm text-black/65 shadow-sm">
+            currently: curious
+          </span>
+        </div>
+
+        <div class="self-center">
+          <p class="mb-5 text-[9px] font-semibold uppercase tracking-[.3em] text-black/40">A little bit about me · 03</p>
+          <h2 class="text-4xl font-light leading-tight tracking-[-.04em] sm:text-5xl">
+            I collect ideas,<br>then make them <span class="font-hand text-[1.14em] font-bold">real.</span>
+          </h2>
+          <p class="mt-8 max-w-xl text-sm leading-8 text-black/60 sm:text-[15px]">我是余沛玲，一名数据科学与大数据技术的大一学生。</p>
+          <p class="mt-5 max-w-xl text-sm leading-8 text-black/60 sm:text-[15px]">喜欢探索算法与人工智能背后的逻辑，也喜欢用摄影、音乐和文字收藏生活里的细微情绪。对我而言，理性与感性从来不是对立面——代码让我理解世界如何运转，而艺术让我感受世界为何动人。</p>
+          <p class="mt-5 max-w-xl text-sm leading-8 text-black/60 sm:text-[15px]">我喜欢 R&B 、爵士乐，喜欢黄昏的天空、偶然遇见的花束，也喜欢把天马行空的想法慢慢变成可以触碰的作品。</p>
+          <p class="mt-5 max-w-xl text-sm leading-8 text-black/60 sm:text-[15px]">始终保持好奇，认真思考，也认真生活。希望在不断探索世界的同时，找到属于自己的表达方式。</p>
+
+          <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-black/15 pt-8 sm:grid-cols-3">
+            <div><p class="text-lg font-medium">大一学生</p><p class="mt-1 text-xs leading-6 text-black/60">数据科学与大数据技术<br>认知科学方向</p></div>
+            <div><p class="text-lg font-medium">AI 探索</p><p class="mt-1 text-xs leading-6 text-black/60">AI 算法与大模型<br>阅读 · Vibe coding · City walk</p></div>
+            <div><p class="font-hand text-3xl font-bold">R&amp;B / Jazz</p><p class="mt-1 text-xs leading-6 text-black/60">裘德 / 方大同<br>喜欢的专辑：《未来》<br>循环播放：《浮动的岛》</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact" class="border-t border-black/10 bg-paper px-5 py-12 sm:px-8 lg:px-14 xl:px-20">
+      <div class="mx-auto flex max-w-[1180px] flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="font-hand text-4xl font-bold">Let's make something<span class="text-[#c77979]">.</span></p>
+          <p class="mt-2 text-xs text-black/40">想聊聊数据、AI、音乐或一个新点子，欢迎来找我。</p>
+        </div>
+        <div class="flex flex-wrap gap-5 text-xs tracking-[.12em] text-black/60">
+          <a href="https://weibo.com/u/9113872158" target="_blank" rel="noopener noreferrer" class="hover:text-black">Weibo</a>
+          <a href="https://github.com/Crescendo0505" target="_blank" rel="noopener noreferrer" class="hover:text-black">GitHub</a>
+          <a href="mailto:0261139015@shisu.edu.cn" class="hover:text-black" aria-label="发送邮件至 0261139015@shisu.edu.cn">0261139015@shisu.edu.cn</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const projects = [
+  {
+    "tab": "01 / 金融新闻学习系统",
+    "tag": "AI learning product",
+    "tagColor": "bg-blush",
+    "title": "Project <span class='font-hand font-bold'>01</span>",
+    "zhTitle": "金融新闻学习系统",
+    "year": "2026 · 持续开发中",
+    "description": "将新闻事件整理为证据、概念、市场影响与学习提示，帮助学习者理解信息之间的联系。",
+    "role": "项目发起、产品需求设计、AI 辅助开发协作、阶段验收与迭代推进。",
+    "tools": "Codex、Docker Desktop、Windows PowerShell/Python、DeepSeek API、OpenAI 兼容接口、LLM Provider 抽象",
+    "href": "project-01.html",
+    "images": [
+      [
+        "profile-assets/project-01-cover.jpg",
+        "金融新闻学习系统：网络封面例图，非项目实际界面",
+        "封面例图"
+      ],
+      [
+        "profile-assets/project-01-process-01.jpg",
+        "金融新闻学习系统：网络过程例图，非项目实际截图",
+        "过程例图"
+      ],
+      [
+        "profile-assets/project-01-result.jpg",
+        "金融新闻学习系统：非项目实际截图",
+        "示意占位 · 非实际成果"
+      ]
+    ],
+    "note": "learn through<br>the news.",
+    "noteColor": "bg-butter/75"
+  },
+  {
+    "tab": "02 / 智能体构建与验证流程",
+    "tag": "agent engineering",
+    "tagColor": "bg-sky",
+    "title": "Project <span class='font-hand font-bold'>02</span>",
+    "zhTitle": "智能体构建与验证流程",
+    "year": "2026 · 持续开发中",
+    "description": "探索从任务规划、草稿生成到验证门槛的智能体构建流程，让实现状态与验证证据可以被清楚追踪。",
+    "role": "项目发起、需求与流程设计、AI 辅助开发协作、测试结果核查与迭代决策。",
+    "tools": "Python · Docker · Git / GitHub · Codex · unittest · Ruff · Mypy · JSON 契约",
+    "href": "project-02.html",
+    "images": [
+      [
+        "profile-assets/project-02-cover.jpg",
+        "智能体构建与验证流程：非项目实际界面",
+        "封面例图"
+      ],
+      [
+        "profile-assets/project-02-process-01.jpg",
+        "智能体构建与验证流程：非项目实际截图",
+        "过程例图"
+      ],
+      [
+        "profile-assets/project-02-result.jpg",
+        "智能体构建与验证流程：非项目实际截图",
+        "示意占位 · 非实际成果"
+      ]
+    ],
+    "note": "build, test,<br>then iterate.",
+    "noteColor": "bg-sky/80"
+  }
+];
+
+    const sidebar = document.getElementById("sidebar");
+    const menuButton = document.getElementById("menuButton");
+    const closeMenuButton = document.getElementById("closeMenuButton");
+    const menuBackdrop = document.getElementById("menuBackdrop");
+    const navLinks = [...document.querySelectorAll(".side-link")];
+
+    function setMenu(open) {
+      sidebar.classList.toggle("open", open);
+      menuBackdrop.classList.toggle("hidden", !open);
+      document.body.classList.toggle("menu-open", open);
+      menuButton.setAttribute("aria-expanded", String(open));
+    }
+
+    menuButton.addEventListener("click", () => setMenu(true));
+    closeMenuButton.addEventListener("click", () => setMenu(false));
+    menuBackdrop.addEventListener("click", () => setMenu(false));
+    navLinks.forEach(link => link.addEventListener("click", () => setMenu(false)));
+
+    function renderProjects(activeIndex = 0) {
+      const tabs = document.getElementById("projectTabs");
+      const content = document.getElementById("projectContent");
+
+      tabs.innerHTML = projects.map((project, index) => `
+        <button
+          type="button"
+          role="tab"
+          aria-selected="${index === activeIndex}"
+          data-index="${index}"
+          class="tab-button ${index === activeIndex ? "active" : ""} rounded-full px-5 py-3 text-left text-xs font-medium sm:text-sm">
+          ${project.tab}
+        </button>
+      `).join("");
+
+      const project = projects[activeIndex];
+
+      content.innerHTML = `
+        <div class="project-panel" role="tabpanel" aria-label="${project.zhTitle}">
+          <div class="grid items-center gap-14 lg:grid-cols-[.82fr_1.18fr] lg:gap-20">
+            <div>
+              <div class="mb-6 flex items-center gap-3">
+                <span class="sticker -rotate-2 ${project.tagColor} px-3 py-1 text-sm">${project.tag}</span>
+                <span class="text-[9px] uppercase tracking-[.28em] text-black/35">${project.year}</span>
+              </div>
+
+              <h3 class="text-4xl font-light leading-tight tracking-[-.04em] sm:text-5xl">${project.title}</h3>
+              <p class="mt-3 text-base font-medium leading-7 text-black/70">${project.zhTitle}</p>
+              <p class="mt-8 max-w-lg text-sm leading-8 text-black/60 sm:text-[15px]">${project.description}</p>
+
+              <dl class="project-facts mt-9 space-y-5">
+                <div><dt class="mb-2 text-xs uppercase tracking-[.18em] text-black/50">我的职责 / Role</dt><dd class="text-sm leading-7 text-black/60">${project.role}</dd></div>
+                <div><dt class="mb-2 text-xs uppercase tracking-[.18em] text-black/50">工具与技术 / Tools</dt><dd class="text-sm leading-7 text-black/60">${project.tools}</dd></div>
+              </dl>
+
+              <a href="${project.href}" class="mt-10 inline-flex items-center gap-3 border-b border-black pb-2 text-xs font-medium transition-all hover:gap-5">
+                查看项目详情 →
+              </a>
+            </div>
+
+            <div class="relative mx-auto min-h-[520px] w-full max-w-[620px] sm:min-h-[600px]">
+              <figure class="polaroid tape absolute left-0 top-0 w-[57%] bg-white p-3 pb-14 shadow-xl" style="--rot:-5deg">
+                <img class="aspect-[4/3] w-full object-cover grayscale-[18%]" src="${project.images[0][0]}" alt="${project.images[0][1]}">
+                <figcaption class="mt-3 text-center font-hand text-xl text-black/55">${project.images[0][2]}</figcaption>
+              </figure>
+
+              <figure class="polaroid absolute bottom-0 right-0 w-[52%] bg-white p-3 pb-14 shadow-xl" style="--rot:4deg">
+                <img class="aspect-square w-full object-cover grayscale-[22%]" src="${project.images[1][0]}" alt="${project.images[1][1]}">
+                <figcaption class="mt-3 text-center font-hand text-xl text-black/55">${project.images[1][2]}</figcaption>
+              </figure>
+
+              <figure class="polaroid absolute right-[10%] top-[31%] z-20 w-[31%] bg-white p-2 pb-9 shadow-xl" style="--rot:1deg">
+                <img class="aspect-[4/5] w-full object-cover grayscale-[10%]" src="${project.images[2][0]}" alt="${project.images[2][1]}">
+              </figure>
+
+              <div class="absolute bottom-[8%] left-[7%] h-20 w-24 -rotate-7 ${project.noteColor} px-3 py-3">
+                <p class="font-hand text-lg leading-5 text-black/60">${project.note}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative mt-12 h-52 overflow-hidden border-t border-black/10 sm:h-64 lg:mt-20 lg:h-72">
+            <div class="absolute inset-x-0 bottom-[-78px] flex justify-center gap-5 sm:gap-8 lg:gap-12">
+              ${project.images.map((img, index) => `
+                <div class="phone-shell ${index === 0 ? "-rotate-4" : index === 1 ? "-translate-y-8" : "rotate-4"}">
+                  <img src="${img[0]}" alt="${img[1]}">
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </div>
+      `;
+
+      tabs.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", () => renderProjects(Number(button.dataset.index)));
+      });
+    }
+
+    renderProjects();
+
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (!visible) return;
+
+      navLinks.forEach(link => {
+        link.classList.toggle("active", link.dataset.section === visible.target.id);
+      });
+    }, {
+      rootMargin: "-25% 0px -55% 0px",
+      threshold: [.05, .2, .45]
+    });
+
+    ["home", "works", "about"].forEach(id => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+
+    window.addEventListener("keydown", event => {
+      if (event.key === "Escape") setMenu(false);
+    });
+  </script>
+</body>
+</html>
